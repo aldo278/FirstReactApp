@@ -1,16 +1,36 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import MovieCard from "../components/MovieCard"
 import "../css/Home.css"
+import { searchMovies, getPopularMovies } from "../services/api"
+
 
 function Home() {
     const [searchQuery, setSearchQuery] = useState("")
 
-    const movies = [
-        {id: 1, title: "John Wick", release_date: "2020"},
-        {id: 2, title: "Terminator", release_date: "2000"},
-        {id: 3, title: "The Matrix", release_date: "1999"},
+    // the useEffect allows you to add side effects to your functions or
+    //to your components and define when they should run
 
-    ]
+    const [movies, setMovies] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setloading] = useState(true);
+
+    useEffect(() => {
+        const loadPopularMovies = async () => {
+            try {
+                const popularMovies = await getPopularMovies();
+                setMovies(popularMovies);
+            } catch (err) {
+                setError("Failed to load popular movies. Please try again later.");
+                console.error(err);
+            }
+            finally {
+                setloading(false);
+            }
+        }
+        loadPopularMovies();
+    }, [])
+
+   
 
     const handleSearch = (e) => {
         e.preventDefault()

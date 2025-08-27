@@ -32,9 +32,25 @@ function Home() {
 
 
 
-    const handleSearch = (e) => {
+    const handleSearch = async (e) => {
         e.preventDefault()
-        alert(searchQuery)
+        if (!searchQuery.trim()) return
+        if (loading) return
+
+        setloading(true)
+
+        try{
+            const searchResults  = await searchMovies(searchQuery)
+            setMovies(searchResults)
+            setError(null)
+
+        } catch (err) {
+            console.error(err)
+            setError("Failed to search movies. Please try again later.")
+        } finally {
+            setloading(false)
+        }
+
         setSearchQuery("")
     }
 
@@ -61,3 +77,5 @@ function Home() {
 }
 
 export default Home
+
+

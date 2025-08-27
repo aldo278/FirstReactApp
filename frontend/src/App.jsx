@@ -4,6 +4,7 @@ import './css/App.css'
 
 import NavBar from './components/NavBar';
 import Home from './pages/Home';
+import { MovieProvider } from './contexts/MovieContext';
 import Favorites from './pages/Favorites';
 
 // a component is a function in JavaScript that returns some JSX 
@@ -17,20 +18,16 @@ function App() {
     // however we can wrap everything in a fragment
     // then we can have multiple elements inside
 
-    <div>
+    <MovieProvider>
       <NavBar />
       <main className="main-content">
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/favorites' element={<Favorites />} />
-      </Routes>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/favorites' element={<Favorites />} />
+        </Routes>
+
       </main>
-    </div>
-
-   
-
-    
-  
+    </MovieProvider>
   );
 }
 

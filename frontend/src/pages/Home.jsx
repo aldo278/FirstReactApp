@@ -30,7 +30,7 @@ function Home() {
         loadPopularMovies();
     }, [])
 
-   
+
 
     const handleSearch = (e) => {
         e.preventDefault()
@@ -41,18 +41,22 @@ function Home() {
     return <div className="home">
 
         <form onSubmit={handleSearch} className="search-form">
-            <input 
-            type="text" 
-            placeholder="Search For Movies..." 
-            className="search-input" 
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)} />
+            <input
+                type="text"
+                placeholder="Search For Movies..."
+                className="search-input"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)} />
             <button type="submit" className="search-button">Search</button>
         </form>
 
-        <div className="movies-grid">
+
+
+        {loading ? <p>Loading...</p> : error ? <p>{error}</p> : <div className="movies-grid">
             {movies.map(movie => movie.title.toLowerCase().startsWith(searchQuery) && <MovieCard movie={movie} key={movie.id} />)}
         </div>
+
+        }
     </div>
 }
 

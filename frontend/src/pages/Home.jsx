@@ -39,8 +39,8 @@ function Home() {
 
         setloading(true)
 
-        try{
-            const searchResults  = await searchMovies(searchQuery)
+        try {
+            const searchResults = await searchMovies(searchQuery)
             setMovies(searchResults)
             setError(null)
 
@@ -66,13 +66,20 @@ function Home() {
             <button type="submit" className="search-button">Search</button>
         </form>
 
+        {error && <p className="error-message">{error}</p>}
 
 
-        {loading ? <p>Loading...</p> : error ? <p>{error}</p> : <div className="movies-grid">
-            {movies.map(movie => movie.title.toLowerCase().startsWith(searchQuery) && <MovieCard movie={movie} key={movie.id} />)}
-        </div>
 
-        }
+        {loading ? (
+            <div className="loading">Loading...</div>
+        ) : (
+            <div className="movies-grid">
+                {movies.map(movie => (
+                    <MovieCard movie={movie} key={movie.id} />
+                ))}
+            </div>
+
+        )}
     </div>
 }
 

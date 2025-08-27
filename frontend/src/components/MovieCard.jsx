@@ -11,7 +11,8 @@ function MovieCard({movie}) {
     e.preventDefault()
     if (favorite) removeFromFavorites(movie.id)
     else addToFavorites(movie)
-  }
+  } 
+  
   return <div className="movie-card">
     <div className="movie-poster">
         {/* when enbedding a variable here, simply use the curly braces */}

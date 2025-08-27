@@ -4,9 +4,9 @@
 //this file will work as a state manager for movie favorites
 
 
-import { createContext, useState, useContext, useEffect, use } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 
-const MovieContext = createContext();
+const MovieContext = createContext()
 
 export const useMovieContext = () => useContext(MovieContext);
 
@@ -43,7 +43,7 @@ export const MovieProvider =  ({children}) => {
         isFavorite
     }
 
-    return <MovieContext.Provider>
+    return <MovieContext.Provider value = {value}>
         {children}
     </MovieContext.Provider>
 

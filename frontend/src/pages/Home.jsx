@@ -32,9 +32,25 @@ function Home() {
 
 
 
-    const handleSearch = (e) => {
+    const handleSearch = async (e) => {
         e.preventDefault()
-        alert(searchQuery)
+        if (!searchQuery.trim()) return
+        if (loading) return
+
+        setloading(true)
+
+        try {
+            const searchResults = await searchMovies(searchQuery)
+            setMovies(searchResults)
+            setError(null)
+
+        } catch (err) {
+            console.error(err)
+            setError("Failed to search movies. Please try again later.")
+        } finally {
+            setloading(false)
+        }
+
         setSearchQuery("")
     }
 
@@ -50,14 +66,23 @@ function Home() {
             <button type="submit" className="search-button">Search</button>
         </form>
 
+        {error && <p className="error-message">{error}</p>}
 
 
-        {loading ? <p>Loading...</p> : error ? <p>{error}</p> : <div className="movies-grid">
-            {movies.map(movie => movie.title.toLowerCase().startsWith(searchQuery) && <MovieCard movie={movie} key={movie.id} />)}
-        </div>
 
-        }
+        {loading ? (
+            <div className="loading">Loading...</div>
+        ) : (
+            <div className="movies-grid">
+                {movies.map(movie => (
+                    <MovieCard movie={movie} key={movie.id} />
+                ))}
+            </div>
+
+        )}
     </div>
 }
 
 export default Home
+
+
